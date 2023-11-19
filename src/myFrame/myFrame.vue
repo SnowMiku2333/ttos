@@ -3,7 +3,7 @@
     <Head/>
     <div class="content">
       <Aside/>
-      <Slot/>
+      <Main/>
     </div>
   </div>
 </template>
@@ -11,18 +11,19 @@
 <script>
 import Aside from './components/aside.vue';
 import Head from './components/head.vue';
-import Slot from './components/slot.vue';
+import Main from './components/main.vue';
 export default {
   components:{
     Aside,
     Head,
-    Slot
+    Main
   }
 }
 </script>
 
 <style>
 .box{
+  height: 100%;
   display: flex;
   flex-direction:column;
 }

@@ -1,5 +1,5 @@
 <template>
-  <myFrame/>
+  <myFrame />
 </template>
 
 <script>
@@ -13,8 +13,12 @@ export default {
 }
 </script>
 
-<style>
-
+<style >
+body,
+html,#app {
+  height: 100%;
+  margin: 0;
+}
 </style>
 
 
