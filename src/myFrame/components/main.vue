@@ -1,17 +1,18 @@
 <template>
     <div class="Box">
-      <div class="titleBox">
-        
-      </div>
+      <tabIndex/>
       <div class="mainBox">
-        <RouterView></RouterView>
+        <RouterView name="main"></RouterView>
       </div>
     </div>
 </template>
 
 <script>
+import tabIndex from './tabIndex.vue';
 export default {
-  
+  components:{
+    tabIndex
+  }
 }
 </script>
 
@@ -21,10 +22,9 @@ export default {
   flex-direction: column;
   flex:1;
 }
-.titleBox{
-  height: 40px;
-}
+
 .mainBox{
+  display: flex;
   background-color: #e9e9eb;
   flex:1;
 }

@@ -1,33 +1,49 @@
 <template>
   <div class="asideBox">
-    <div v-for="item in infoList" class="itemBox" >
+    <div v-for="item in infoList" class="itemBox" 
+      @click="()=>selectTab(item)"
+      :class="tabIndex == item.name ? 'focusBox' : ''"
+    >
       <img :src="item.img" width="20" height="20">
       <div class="itemTitle">
-        {{item.name}}
+        {{item.title}}
       </div>
     </div>
   </div>
 </template>
 <script>
+import { useStore } from 'vuex';
+import { computed } from 'vue';
+import { useRouter } from 'vue-router'
+
 export default {
   setup(){
+    let store = useStore()
+    let tabIndex = computed(()=>store.state.tabIndex) 
+    let router = useRouter()
     let infoList = [
     {
-        name:'拖车信息展示',
-        img:require('../../assets/info.svg'),
-        path:'',
+      title:'拖车信息展示',
+      img:require('../../assets/info.svg'),
+      path:'/info',
+      name:'info',
     },{
-        name:'拖车轨迹监控',
-        img:require('../../assets/position.svg'),
-        path:'',
+      title:'拖车轨迹监控',
+      img:require('../../assets/position.svg'),
+      path:'/position',
+      name:'position',
     },{
-        name:'实时信息',
-        img:require('../../assets/chat.svg'),
-        path:'',
+      title:'实时信息',
+      img:require('../../assets/chat.svg'),
+      path:'/chat',
+      name:'chat',
     }]
-    
+    function selectTab(event){
+      store.commit('selectTab',event)
+      router.push(event.path)
+    }
     return {
-      infoList
+      infoList,selectTab,tabIndex
     }
   }
 }
@@ -45,14 +61,16 @@ export default {
   align-items: center;
   height: 50px;
   padding-left: 10px;
+  border-radius: 10px;
+  margin: 5px 5px;
 }
 .itemBox:hover{
-  background-color: #79bbff;
-  color: #ecf5ff;
+  background-color: #ecf5ff;
+  color: #66ccff;
 }
-.itemBox:focus{
-  background-color: #79bbff;
-  color: #ecf5ff;
+.focusBox{
+  background-color: #ecf5ff;
+  color: #66ccff;
 }
 .itemTitle{
   font-size: 15px;
