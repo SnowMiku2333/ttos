@@ -21,14 +21,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .box{
-  height: 100%;
   display: flex;
   flex-direction:column;
+  height: 100%;
 }
 .content{
   display: flex;
   flex: 1;
+  overflow: hidden;
 }
 </style>
