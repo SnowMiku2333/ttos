@@ -1,32 +1,41 @@
 <template>
   <div class="memberBox">
-    <div class="content" v-for="item in arr">
+    <div class="content" v-for="item in arr" @click="selectMem(item)">
       <div class="imgBox">
         <img src="@/assets/gyw.jpg" width="30" height="30" >
       </div>
       <div class="nameBox">
-        {{ item }}
-      </div>
-      <div class="timeBox">
-        {{ getTime() }}
+        {{ item}}
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { computed,onMounted,inject } from 'vue'
+import { useStore } from 'vuex'
 export default {
   setup(){
-    let arr = ['gyw','gyw','gyw','gyw','gyw','gyw','gyw','gyw','gyw']
-    function getTime(){
-      let date = new Date()
-      let hour = date.getHours()
-      let minutes = date.getMinutes()  
-      minutes = minutes >= 10 ? minutes : '0' + minutes
-      return hour + ':' + minutes 
+    const store = useStore()
+    let arr = computed(() => store.state.member)
+    let axios = inject('axios')
+    async function selectMem(target){
+      store.commit('selectMem',target)
+      let result = await axios.get('/Message/getMessage?name='+target)
+      store.commit('updateMessage',result.data.data)
     }
+    onMounted(async()=>{
+      let result = await axios.get('/trailer/getAllTrailers')
+      let member = []
+      result.data.data.forEach(val => {
+        member.push(val.trailer_ID)
+      });
+      store.commit('updateMem',member)
+    })
+      
+
     return{
-      arr,getTime
+      arr,selectMem
     }
   }
 }
